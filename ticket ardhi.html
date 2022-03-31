@@ -1,0 +1,252 @@
+<?php
+
+if ($_POST) {
+  $diskon = 20;
+  $harga_diskon = 0;
+
+  $nama = $_POST['nama'];
+  $alamat = $_POST['alamat'];
+  $tujuan = $_POST['tujuan'];
+  $kelas = $_POST['kelas'];
+  $jumlah_tiket = $_POST['jumlah_tiket'];
+
+  switch ($tujuan) {
+    case 'KRW':
+      $harga_tiket = 20000;
+      break;
+    case 'BDG':
+      $harga_tiket = 40000;
+      break;
+    case 'JGJ':
+      $harga_tiket = 100000;
+      break;
+    case 'PDG':
+      $harga_tiket = 50000;
+      break;
+    case 'MKSR':
+      $harga_tiket = 150000;
+      break;
+  }
+
+  switch ($kelas) {
+    case 'Ekonomi':
+      $harga_kelas = 25000;
+      break;
+    case 'Bisnis':
+      $harga_kelas = 50000;
+      break;
+    case 'Eksekutif':
+      $harga_kelas = 100000;
+      break;
+    case 'Premium':
+      $harga_kelas = 25000;
+      break;
+    case 'Gold':
+      $harga_kelas = 25000;
+      break;
+  }
+
+  $harga_per_tiket = $harga_tiket + $harga_kelas;
+  $total_harga_tiket = ($harga_per_tiket * $jumlah_tiket);
+
+  if ($jumlah_tiket >= 5) {
+    $harga_diskon = ($total_harga_tiket) * $diskon / 100;
+    $total_harga_tiket = $total_harga_tiket - $harga_diskon;
+  }
+}
+?>
+<!doctype html>
+<html lang="en">
+
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.0/dist/css/bootstrap.min.css">
+  <title>Tiket</title>
+
+  <style>
+    .navbar {
+      background-color: blue;
+      font-size: 4vh;
+      padding: 20px 0;
+    }
+
+    .navbar .navbar-brand {
+      font-size: 2.5vh;
+      font-weight: Times New Roman;
+    }
+
+    .navbar li {
+      margin-left: 50px;
+    }
+
+    .main-jumbotron {
+      background-color: gray;
+      color: black;
+    }
+
+    .jumbotron {
+      padding: 50px 0 60px 0;
+      background-color: transparent;
+    }
+
+    .card {
+      margin-top: 30px;
+    }
+
+    .card img,
+    .card-img-top {
+      max-width: 400px;
+      max-height: 140px;
+    }
+  </style>
+</head>
+
+<body>
+  <nav class="navbar navbar-expand-lg navbar-dark">
+    <div class="container">
+      <a class="navbar-brand" href="#">BELI TIKET TERPECAYA DAN MURAH HANYA DI SINI!</a>
+      <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent
+      " aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+      <div class="collapse navbar-collapse" id="navbarSupportedContent">
+        <ul class="navbar-nav mr-auto">
+          <li class="nav-item active">
+            <a class="nav-link" href="#">Home <span class="sr-only">(current)</span></a>
+            <a class="nav-link" href="#">Profil <span class="sr-only">(current)</span></a>
+            <a class="nav-link" href="#">Pusat Bantuan <span class="sr-only">(current)</span></a>
+            <a class="nav-link" href="#">Kebijakan Privasi <span class="sr-only">(current)</span></a>
+            <a class="nav-link" href="#">Syarat dan Ketentuan <span class="sr-only">(current)</span></a>
+          </li>
+        </ul>
+      </div>
+    </div>
+  </nav>
+  <main class="main-jumbotron">
+    <div class="container jumbotron">
+      <h1 class="display-4">Selamat datang di Penjualan Tiket Penerbangan ini.</h1>
+      <p class="lead">Disini Kamu Dapat Dengan Mudah Membeli Tiket Penerbangan Ke Tujuan Yang Anda Inginkan.
+      </p>
+    </div>
+  </main>
+  <section class="text-center container">
+    <div class="row py-lg-4">
+      <div class="col-lg-6 col-md-8 mx-auto">
+        <h1 class="fw-light">Berikut Pengisian Data Untuk Pembelian Tiket</h1>
+        <p class="lead text-muted">Info, Melayani Pembelian Tiket Keluar Negri Dengan Syarat Memiliki Paspor 
+        Terlebih Dahulu.</p>
+      </div>
+      <div class="col-lg-12 col-md-8 mx-auto text-left">
+        <?php if (!$_POST) : ?>
+          <form action="tiket2.php" method="post">
+            <div class="form-group">
+              <label for="nama">Nama</label>
+              <input type="text" class="form-control" id="nama" name="nama">
+            </div>
+            <div class="form-group">
+              <label for="alamat">Alamat</label>
+              <input type="text" class="form-control" id="alamat" name="alamat">
+            </div>
+            <div class="form-group">
+              <label for="tujuan">Tujuan</label>
+              <select class="form-control" id="tujuan" name="tujuan">
+                <option value="KRW">Jakarta</option>
+                <option value="BDG">Majalengka</option>
+                <option value="JGJ">Malang</option>
+                <option value="PDG">Riau</option>
+                <option value="MKSR">Bali</option>
+              </select>
+            </div>
+            <fieldset class="form-group">
+              <legend class="col-form-label pt-0">Kelas</legend>
+              <div class="col-sm-10">
+                <div class="form-check">
+                  <input class="form-check-input" type="radio" name="kelas" id="kelas_ekonomi
+                  " value="Ekonomi">
+                  <label class="form-check-label" for="kelas_ekonomi">
+                    Ekonomi
+                  </label>
+                </div>
+                <div class="form-check">
+                  <input class="form-check-input" type="radio" name="kelas" id="kelas_bisnis
+                  " value="Bisnis">
+                  <label class="form-check-label" for="kelas_bisnis">
+                    Bisnis
+                  </label>
+                </div>
+                <div class="form-check">
+                  <input class="form-check-input" type="radio" name="kelas" id="kelas_eksekutif
+                  " value="Eksekutif">
+                  <label class="form-check-label" for="kelas_eksekutif">
+                    Eksekutif
+                </div>
+                <div class="form-check">
+                  <input class="form-check-input" type="radio" name="kelas" id="kelas_premium
+                  " value="Eksekutif">
+                  <label class="form-check-label" for="kelas_premium">
+                    Premium
+                </div>
+                <div class="form-check">
+                  <input class="form-check-input" type="radio" name="kelas" id="kelas_gold
+                  " value="Eksekutif">
+                  <label class="form-check-label" for="kelas_gold">
+                    Gold
+                  </label>
+                </div>
+              </div>
+            </fieldset>
+            <div class="form-group">
+              <label for="jumlah_tiket">Jumlah Tiket</label>
+              <input type="number" class="form-control" id="jumlah_tiket" name="jumlah_tiket">
+            </div>
+            <button class="btn btn-danger btn-block" type="submit">Beli Tiket</button>
+          </form>
+        <?php else : ?>
+          <div class="row">
+            <div class="col-md-6">
+              <div class="form-group">
+                <label for="nama">Nama</label>
+                <input type="text" class="form-control" id="nonama" value="<?= $nama; ?>" readonly>
+              </div>
+              <div class="form-group">
+                <label for="tujuan">Tujuan</label>
+                <input type="text" class="form-control" id="tujuan" value="<?= $tujuan; ?>" readonly>
+              </div>
+            </div>
+            <div class="col-md-6">
+              <div class="form-group">
+                <label for="kelas">Kelas</label>
+                <input type="text" class="form-control" id="kelas" value="<?= $kelas; ?>" readonly>
+              </div>
+              <div class="form-group">
+                <label for="harga_asli">Harga Asli</label>
+                <input type="text" class="form-control" id="harga_asli
+                " value="<?= $total_harga_tiket + $harga_diskon; ?>" readonly>
+              </div>
+            </div>
+            <div class="col-md-6">
+              <div class="form-group">
+                <label for="diskon">Diskon</label>
+                <input type="text" class="form-control" id="diskon" value="<?= $harga_diskon; ?>" readonly>
+              </div>
+            </div>
+            <div class="col-md-12">
+              <div class="form-group">
+                <label for="total_harga_tiket">Total Harga Tiket</label>
+                <input type="text" class="form-control" id="total_harga_tiket
+                " value="<?= $total_harga_tiket; ?>" readonly>
+              </div>
+            </div>
+          </div>
+        <?php endif; ?>
+      </div>
+    </div>
+  </section>
+
+
+  <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.6.0/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+
+</html>
